@@ -1,4 +1,4 @@
-# Graylog Enterprise Security & Analytics Platform (GESAP)
+# Graywatch Enterprise Security & Analytics Platform (GESAP) 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Graylog Version](https://img.shields.io/badge/Graylog-5.1-brightgreen.svg)](https://www.graylog.org/)
