@@ -29,21 +29,24 @@
 - **Security Intelligence Integration** - Connect with threat feeds, OSINT sources, and security platforms
 - **Automated Backup & DR** - Scheduled backups with documented recovery procedures
 
-## 📋 Table of Contents
+## 📚 Table of Contents
 
-- [Quick Start](#quick-start)
-- [Architecture](#architecture)
-- [Installation Guide](#installation-guide)
-- [Security Features](#security-features)
-- [Threat Detection](#threat-detection)
-- [Custom Dashboards](#custom-dashboards)
-- [Security Hardening](#security-hardening)
-- [Machine Learning Features](#machine-learning-features)
-- [SIEM Capabilities](#siem-capabilities)
-- [Maintenance](#maintenance)
-- [User Guides](#user-guides)
-- [Contributing](#contributing)
-- [License](#license)
+1. [Project Overview](#project-overview)
+2. [System Architecture](#system-architecture)
+3. [Key Features](#key-features)
+4. [Security Capabilities](#security-capabilities)
+5. [Deployment Methods](#deployment-methods)
+6. [Installation Guide](#installation-guide)
+7. [Threat Detection Rules](#threat-detection-rules)
+8. [Dashboards & Visualisations](#dashboards--visualisations)
+9. [Log Ingestion Pipelines](#log-ingestion-pipelines)
+10. [Backup & Disaster Recovery](#backup--disaster-recovery)
+11. [User Access Control (RBAC)](#user-access-control-rbac)
+12. [Performance Tuning & Memory Management](#performance-tuning--memory-management)
+13. [Project Management Board (GitHub)](#project-management-board-github)
+14. [Usage Guides](#usage-guides)
+15. [Academic Context & Supervisors](#academic-context--supervisors)
+16. [License](#license)
 
 ## 🏛️ Architecture
 
