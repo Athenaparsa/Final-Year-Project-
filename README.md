@@ -12,10 +12,10 @@
 ## 📌 Project Information
 
 - **Author:** Athena Parsa  
-- **Degree:** BSc Cybersecurity  
+- **Degree:** BSc Hons Cybersecurity  
 - **Institution:** University of Roehampton  
-- **Supervisors:** Charles Clarke, Mastanhe Davis  
-- **Project Year:** 2025  
+- **Supervisors:** Charles Clarke, Mastaneh Davis  
+- **Project Year:** 2024-2025  
 - **Dissertation Title:** Graywatch Enterprise Security & Analytics Platform (GESAP)
 
 ---
