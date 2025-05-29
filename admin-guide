@@ -1,0 +1,238 @@
+📘 GESAP Administrator Guide
+
+This guide provides detailed instructions for system administrators responsible for setting up, maintaining, and managing the Graywatch Enterprise Security & Analytics Platform (GESAP).
+🔧 1. System Requirements
+Component	Specification
+Operating System	Ubuntu Server/Desktop 22.04 LTS
+RAM	Minimum 8GB (recommended: 12GB)
+CPU	Minimum 4 cores
+Storage	80GB+ SSD (log storage must be encrypted)
+Network	Dual NICs (NAT for internet, Internal for VM LAN)
+
+Table A. GESAP Deployment Requirements.
+🖥️ 2. VM Configuration
+
+    Use VirtualBox with two Ubuntu VMs:
+
+        Ubuntu Server hosts MongoDB, OpenSearch, Graylog
+
+        Ubuntu Desktop acts as a client and testing endpoint
+
+Recommended VirtualBox Settings:
+
+Adapter 1: NAT (enp0s3) - for internet access  
+Adapter 2: Internal Network (enp0s8) - static IP 192.168.123.1
+
+Use nmtui to set static IP on enp0s8.
+🔐 3. User Management and Access Control
+
+    Create user roles in Graylog > System > Authentication > Roles:
+
+        admin – Full access
+
+        analyst – Read-only access to dashboards
+
+        hunter – Access to detection rules and alerts
+
+    Create users and assign roles under Users section.
+
+    Enable HTTPS via Nginx reverse proxy:
+
+sudo apt install nginx
+
+Configure /etc/nginx/sites-available/graylog with TLS (certificates recommended for production).
+🛠️ 4. Installation Commands (Simplified)
+
+sudo apt update && sudo apt upgrade
+sudo apt install -y openjdk-17-jre mongodb nginx
+sudo dpkg -i graylog-server.deb
+
+Set environment variables and passwords in:
+
+/etc/graylog/server/server.conf
+
+📈 5. Index and Log Rotation Configuration
+
+    Index Rotation Strategy: 1GB or 14 days
+
+    Retention Strategy: Delete oldest index
+
+    Location: Graylog > System > Indices > Default index set
+
+Also ensure logrotate is working by checking:
+
+cat /etc/logrotate.d/rsyslog
+
+🔄 6. Backup and Recovery Procedures
+Backup
+
+Automated daily backup:
+
+tar -czvf graylog_backup.tar.gz /etc/graylog /var/lib/elasticsearch
+
+Schedule with cron:
+
+crontab -e
+# Add:
+0 3 * * * /usr/local/bin/graylog_backup.sh
+
+OpenSearch Snapshot
+
+    Define repo path in elasticsearch.yml:
+
+path.repo: ["/mnt/graylog_snapshots"]
+
+    Register snapshot:
+
+PUT _snapshot/gesap_backup
+
+📉 7. Performance Tuning
+
+    Add swap memory:
+
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+    Edit /etc/systemd/system/graylog-server.service.d/override.conf to delay startup if Elasticsearch is slow.
+
+🧪 8. Testing and Validation
+
+    Validate log ingestion in Graylog > Inputs
+
+    Confirm detection rules by triggering test alerts
+
+    Simulate user behaviour to check RBAC effectiveness
+
+    Use dashboards to confirm visual outputs
+
+⚠️ 9. Troubleshooting
+Issue	Solution
+index_not_found_exception	Check Elasticsearch health and index set name
+MongoDB connection errors	Restart service and verify port (default: 27017)
+Graylog not loading	Verify Java version, Elasticsearch state, Nginx proxy
+Logs not appearing in dashboards	Check Stream and Pipeline configurations
+
+Let me now generate your flawless Threat Hunter Guide...
+
+Here is your complete Threat Hunter Guide for the GESAP project — designed for cybersecurity students or junior analysts using the system. It explains how to explore the dashboards, interpret alerts, and perform hands-on detection and investigation:
+🧠 GESAP Threat Hunter Guide
+
+This guide supports cybersecurity analysts using the GESAP platform for threat detection, log analysis, and incident response activities in an educational SOC environment.
+🕵️‍♀️ 1. Role Description: Threat Hunter
+
+GESAP defines the hunter role as an active participant in SOC threat detection and mitigation. Responsibilities include:
+
+    Monitoring dashboards for anomalies
+
+    Investigating detection rule triggers
+
+    Tuning or proposing new rules
+
+    Escalating potential threats to the admin
+
+📊 2. Accessing Dashboards
+
+Once logged in:
+
+    Go to Search > Dashboards
+
+    Select one of the prebuilt dashboards:
+
+Dashboard Name	Purpose
+Permission Escalations	Monitors all sudo, usermod, and role changes
+Suspicious Account Activities	Tracks creation/deletion of users
+Log Tampering	Alerts on log deletions, .bash_history edits
+Sensitive File Access	Shows activity on /etc/passwd, shadow, sudoers
+Off-Hours Login Attempts	Flags access events outside 08:00–18:00
+
+Table B. Dashboard Summary for Threat Hunting.
+
+You can use filters like:
+
+message: "sudo" OR source: "ubuntu-desktop" OR user_name: "unknown"
+
+🚨 3. Investigating Alerts
+
+    Navigate to Search > Streams
+
+    Click on an active stream, e.g., Brute Force Alerts
+
+    View matched logs, timestamps, and source hosts
+
+Correlate with:
+
+    Host logs from the Ubuntu Desktop
+
+    User session information from auth.log
+
+    Previous login/logout activities
+
+🔄 4. Common Threat Scenarios
+Scenario	Indicator	Recommended Action
+Brute Force SSH	5+ failed logins from same IP	Confirm with /var/log/auth.log
+Privilege Escalation	Sudden use of sudo by new user	Check user history and command logs
+Log Tampering	.bash_history cleared or modified	Investigate shell session timestamps
+Data Exfiltration	Use of scp, curl, wget to ext IP	Compare file sizes, check destination host
+Login Outside Hours	User login at 03:00	Validate session intent with admin
+
+Table C. Threat Scenario Analysis Patterns.
+🔎 5. Advanced Search Queries
+
+Search examples in Graylog:
+
+source:ubuntu-desktop AND sshd AND failed
+message:/etc/passwd OR /etc/shadow
+timestamp:[now-1d TO now] AND user_name:root
+
+You can also use the Histogram view to identify event spikes.
+🧰 6. Tools and Techniques
+
+    Use Highlight Terms to track keywords
+
+    Enable Pivot to Original Log to trace events
+
+    Export event logs using Export as CSV for offline analysis
+
+    Compare alert events with open-source threat feeds (e.g. AlienVault OTX)
+
+⚙️ 7. Tuning Detection Rules
+
+If a detection rule is too noisy or too strict:
+
+    Go to System > Pipelines
+
+    Locate the relevant rule (GESAP-Brute-Force)
+
+    Adjust condition logic:
+
+rule "Brute Force"
+when
+  count("ssh_failed", within(5m)) > 5
+then
+  set_field("alert", "brute_force_detected");
+end
+
+Coordinate with admins before disabling or modifying rules.
+🧪 8. Validating Fixes
+
+Once mitigation is applied:
+
+    Re-test by manually triggering an event
+
+    Check that alerts no longer fire unless truly anomalous
+
+    Document findings in a shared Incident Log or GitHub issue
+
+🧭 9. Best Practices
+
+    Never ignore repeated alerts, even if benign
+
+    Keep session logs and queries documented
+
+    Do not alter system configurations without admin approval
+
+    Regularly report patterns and anomalies to the admin team
+
+    Use this environment for ethical, educational purposes only
