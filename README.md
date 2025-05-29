@@ -182,6 +182,15 @@ Project managed through GitHub Kanban, based on five structured phases:
 
     Backup, Reporting, and Documentation
 
+## 📘 Documentation
+
+Explore detailed guides for setting up, using, and maintaining GESAP:
+
+- [Admin Guide](admin-guide.md)  
+- [Threat Hunter Guide](threat-hunter-guide.md)  
+- [Incident Response Manual](incident-response.md)  
+- [Troubleshooting Handbook](troubleshooting.md)  
+
 Each task was tracked, updated, and referenced in the final dissertation.
 🎓 Academic Context
 
