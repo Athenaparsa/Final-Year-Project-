@@ -9,7 +9,7 @@
 
 ---
 
-## 📌 Project Information
+ Project Information
 
 - **Author:** Athena Parsa  
 - **Degree:** BSc Hons Cybersecurity  
@@ -20,20 +20,20 @@
 
 ---
 
-## 🌟 Key Features
+ Key Features
 
-- ✅ Real-time security analytics and alerting  
-- ✅ Detection rules for brute force, privilege escalation, and data exfiltration  
-- ✅ Log ingestion from Linux servers and web infrastructure  
-- ✅ Fully open-source stack (Graylog, OpenSearch, MongoDB)  
-- ✅ Interactive dashboards for threat visualisation  
-- ✅ Automated backups and snapshot scheduling  
-- ✅ Resource-efficient design with memory protection  
-- ✅ Modular and scalable for future student deployments  
+-  Real-time security analytics and alerting  
+-  Detection rules for brute force, privilege escalation, and data exfiltration  
+-  Log ingestion from Linux servers and web infrastructure  
+-  Fully open-source stack (Graylog, OpenSearch, MongoDB)  
+-  Interactive dashboards for threat visualisation  
+-  Automated backups and snapshot scheduling  
+-  Resource-efficient design with memory protection  
+-  Modular and scalable for future student deployments  
 
 ---
 
-## 📚 Table of Contents
+ Table of Contents
 
 1. [Overview](#overview)  
 2. [Architecture](#architecture)  
@@ -51,13 +51,13 @@
 
 ---
 
-## 🧠 Overview
+ Overview
 
 GESAP is a fully working SIEM system that allows universities to simulate security operations centre (SOC) environments. This solution was developed to bridge the gap between theoretical knowledge and real-world security monitoring practices in academic settings.
 
 ---
 
-## 🏗️ Architecture
+ Architecture
 
 | Layer                    | Components                                       |
 |--------------------------|--------------------------------------------------|
@@ -71,15 +71,15 @@ GESAP is a fully working SIEM system that allows universities to simulate securi
 
 ---
 
-## ⚙️ Installation
+ Installation
 
-### Prerequisites
+ Prerequisites
 
 - **2 VMs** (Ubuntu Desktop + Ubuntu Server)  
 - **VirtualBox** with Internal & NAT network adapters  
 - Minimum: 4 CPU cores, 8GB RAM, 80GB Disk  
 
-### Setup Summary
+ Setup Summary
 
 ```bash
 sudo apt update && sudo apt upgrade
@@ -87,7 +87,7 @@ sudo apt install mongodb opensearch graylog-server nginx filebeat rsyslog
     Configuration includes SSH setup, dual network interface, and static IP binding between VMs.
 
 For full deployment, see the Admin Guide.
-📥 Log Ingestion
+ Log Ingestion
 
 Log ingestion is achieved using Filebeat and Rsyslog:
 
@@ -101,7 +101,7 @@ Example Rsyslog configuration:
 
 *.* @192.168.123.1:5140;RSYSLOG_SyslogProtocol23Format
 
-🚨 Threat Detection Rules
+ Threat Detection Rules
 
 The following detection pipelines were implemented:
 Rule Name	Description
@@ -112,7 +112,7 @@ Out of Hours Login	Flags login events outside normal work hours
 Log Tampering	Monitors changes to .bash_history, auth.log, etc
 
 Table 2. Implemented Detection Pipelines in GESAP.
-📊 Dashboards
+ Dashboards
 Dashboard Title	Purpose
 Permission Escalations	Visual audit trail of sudo activity
 Suspicious Account Activities	New users and deleted accounts
@@ -121,7 +121,7 @@ Sensitive File Access	Access to /etc/passwd, shadow etc.
 Off-Hours Login Attempts	Filtered logins by time of day
 
 Table 3. Custom Dashboards Available in GESAP.
-🧠 Disk Management & Backup
+ Disk Management & Backup
 
     Enabled logrotate for local logs
 
@@ -134,7 +134,7 @@ Table 3. Custom Dashboards Available in GESAP.
 tar -czvf graylog_backup.tar.gz /etc/graylog /var/lib/elasticsearch
 
 Snapshot storage path was defined in elasticsearch.yml with appropriate permissions.
-🔐 Role-Based Access Control (RBAC)
+ Role-Based Access Control (RBAC)
 
 Custom roles were created in Graylog:
 
@@ -145,7 +145,7 @@ Custom roles were created in Graylog:
     hunter – access to detection rules and alerts
 
 Passwords were removed from all config files. Two users tested concurrently using separate sessions.
-🧠 Performance Tuning
+ Performance Tuning
 
     Heap Size optimised in OpenSearch config
 
@@ -158,7 +158,7 @@ sudo chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
 
     Configured Elasticsearch and Graylog startup delays in systemd for stable boot
 
-📘 Usage Guides
+ Usage Guides
 
     Admin Guide: Setup, backup, and user management
 
@@ -168,7 +168,7 @@ sudo chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
 
     Troubleshooting Handbook: Covers errors like index_not_found_exception, MongoDB failures, and snapshot issues
 
-📈 Project Planning
+ Project Planning
 
 Project managed through GitHub Kanban, based on five structured phases:
 
@@ -182,7 +182,7 @@ Project managed through GitHub Kanban, based on five structured phases:
 
     Backup, Reporting, and Documentation
 
-## 📘 Documentation
+ Documentation
 
 Explore detailed guides for setting up, using, and maintaining GESAP:
 - [Admin Guide](admin-guide.md)  
@@ -193,7 +193,7 @@ Explore detailed guides for setting up, using, and maintaining GESAP:
 
 
 Each task was tracked, updated, and referenced in the final dissertation.
-🎓 Academic Context
+ Academic Context
 
 This project was submitted as a final-year dissertation to the University of Roehampton, demonstrating a modular SIEM platform for academic training. The system is deployable, robust, and intended for multi-user student interaction with built-in performance protections and documentation.
 📄 License
